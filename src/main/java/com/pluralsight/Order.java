@@ -1,0 +1,46 @@
+package com.pluralsight;
+
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+// Contains Product items such as (Pizza, Drink, and Garlic Knots) also calculates total.
+public class Order {
+
+    private String orderId;
+    private LocalDateTime dateTime;
+    private ArrayList<Product> items;
+
+    public Order(String orderId) {
+        this.orderId = orderId;
+        this.dateTime = LocalDateTime.now();
+        this.items = new ArrayList<>();
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public ArrayList<Product> getItems() {
+        return items;
+    }
+    public void addItem(Product item) {
+        items.add(item);
+    }
+    // Calculates the price of the complete order.
+    public double calculateTotal(){
+        double total = 0;
+        for (Product p : items) {
+            total += p.calculatePrice();
+        }
+        return total;
+    }
+    public void display() {
+        System.out.println("Order: " + orderId);
+
+    }
+}
