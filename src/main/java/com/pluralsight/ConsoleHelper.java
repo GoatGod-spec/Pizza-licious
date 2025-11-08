@@ -8,6 +8,7 @@ public class ConsoleHelper {
     private static Scanner scanner = new Scanner(System.in);
 
     public static String promptForString(String prompt) {
+        
         System.out.print(prompt);
         return scanner.nextLine();
     }

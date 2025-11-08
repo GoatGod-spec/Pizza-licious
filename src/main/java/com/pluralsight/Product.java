@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-public class Product {
+public abstract Product {
 
     protected String name;
     protected double price;
@@ -17,5 +17,10 @@ public class Product {
     public double getPrice() {
         return price;
     }
-    
+    public abstract double calculatePrice();
+
+    @Override
+    public String toString(){
+        return String.format("%s | $%.2f", name, price);
+    }
 }
