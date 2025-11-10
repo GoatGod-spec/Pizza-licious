@@ -41,6 +41,16 @@ public class Order {
     }
     public void display() {
         System.out.println("Order: " + orderId);
-
+            System.out.println("Date/Time: " + dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd / HH:mm:ss")));
+        System.out.println("Items in order: ");
+        for (Product p : items) {
+            System.out.println(" - " + p.toString());
+        }
+        System.out.printf("Total Price: $%.2f/n", calculateTotal());
+    }
+    public boolean isValid(){
+        boolean hasPizza = items.stream().anyMatch( p -> p instanceof Pizza);
+        boolean hasDrinkOrGarlicKnots = items.stream().anyMatch( p -> p instanceof Drink || p instanceof GarlicKnots);
+        return hasPizza || hasDrinkOrGarlicKnots;
     }
 }

@@ -27,4 +27,15 @@ public class Pizza {
     public Boolean getStuffedCrust() {
         return stuffedCrust;
     }
+    private static double getBasePrice(String size){
+        switch (size) {
+            case "8":
+                return 8.50;
+            case "12":
+                return 12;
+            case "16":
+                return 16.50;
+            default: return 0;
+        }
+    }
 }
