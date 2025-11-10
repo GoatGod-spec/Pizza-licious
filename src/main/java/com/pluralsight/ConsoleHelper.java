@@ -43,9 +43,20 @@ public class ConsoleHelper {
         }
     }
     public static double promptForDouble(String prompt){
-        System.out.print(prompt);
-        double result = scanner.nextDouble();
-        scanner.nextLine();
+        double result = 0;
+        boolean valid = false;
+
+        while (!valid){
+            System.out.print(prompt + "+ ");
+            String input = scanner.nextLine().trim();
+
+            try {
+                result = Double.parseDouble(input);
+                valid = true;
+            } catch (NumberFormatException e){
+                System.out.println("Invalid input, Please enter a valid number.");
+            }
+        }
         return result;
     }
 }
