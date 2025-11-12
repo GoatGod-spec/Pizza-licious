@@ -48,9 +48,4 @@ public class Order {
         }
         System.out.printf("Total Price: $%.2f/n", calculateTotal());
     }
-    public boolean isValid(){
-        boolean hasPizza = items.stream().anyMatch( p -> p instanceof Pizza);
-        boolean hasDrinkOrGarlicKnots = items.stream().anyMatch( p -> p instanceof Drink || p instanceof GarlicKnots);
-        return hasPizza || hasDrinkOrGarlicKnots;
-    }
 }

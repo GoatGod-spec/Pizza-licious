@@ -93,7 +93,7 @@ public class Pizza {
     @Override
     public double calculatePrice(){
         double total = price;
-        for (Topping t = toppingType){
+        for (Topping t = toppings){
             String category = t.getCategory();
 
             switch (category.toLowerCase()){
@@ -105,8 +105,6 @@ public class Pizza {
                     break;
             }
         }
-        total += crustType.getExtra;
-
         return total;
     }
 
