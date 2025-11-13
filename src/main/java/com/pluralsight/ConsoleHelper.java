@@ -8,14 +8,35 @@ public class ConsoleHelper {
     private static Scanner scanner = new Scanner(System.in);
 
     public static String promptForString(String prompt) {
-        
-        System.out.print(prompt);
-        return scanner.nextLine();
+        String input = "";
+        while (input.isEmpty()) {
+            System.out.print(prompt + ": ");
+            input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                System.out.println("Input Empty. Please try again.");
+            }
+        }
+        return input;
     }
     public static int promptForInt(String prompt){
-        System.out.print(prompt);
-        int result = scanner.nextInt();
-        scanner.nextLine();
+        int result = 0;
+        boolean valid = false;
+
+        // keep asking until get a valid integer
+        while (!valid) {
+            System.out.print(prompt + ": ");
+
+            // checks if input has an integer
+            if (scanner.hasNextInt()) {
+                result = scanner.nextInt();
+                scanner.nextLine();
+                valid = true;
+            }
+            else {
+                System.out.println("Invalid input. Please enter a integer.");
+                scanner.nextLine();
+            }
+        }
         return result;
     }
     public static float promptForFloat(String prompt){

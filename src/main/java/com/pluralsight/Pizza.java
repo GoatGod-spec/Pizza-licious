@@ -9,7 +9,7 @@ public class Pizza {
     private ArrayList<Topping> toppings;
     private Boolean stuffedCrust;
 
-    public Pizza(String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
+    public Pizza(String name, double price, String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
         this.size = size;
         this.crustType = crustType;
         this.toppings = new ArrayList<>();
