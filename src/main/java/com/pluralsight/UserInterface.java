@@ -17,7 +17,7 @@ public class UserInterface {
             showMainMenu();
 
             int choice = ConsoleHelper.promptForInt("Select from one of the options");
-            switch (command) {
+            switch (choice) {
                 case 1 -> addPizza();
                 case 2 -> addDrink();
                 case 3 -> addGarlicKnots();
@@ -121,6 +121,7 @@ public class UserInterface {
         currentOrder.addItem(pizza);
         System.out.println("\n--- Pizza was added to your order! \nPrice: $%.2\n", pizza.calculatePrice());
     }
+
     private void addRegToppings(Pizza pizza, String[] options, String title, String type, boolean allowExtra){
         List <String> selectedItems = ToppingsHelper.selectMultiple(options, title);
 
@@ -138,8 +139,11 @@ public class UserInterface {
         }
         System.out.println(title + " Added!");
     }
+
+
     private void addMeats(Pizza pizza){
-        addMeats(pizza, MenuSelection.Toppings.meats);
+        // name/title of meat, type of meat and if true/false of extra topping
+        addMeats(pizza, MenuSelection.Toppings.meats, "Meats", "meat", true);
     }
     private void addCheeses (Pizza pizza){
         addCheeses(pizza, MenuSelection.Toppings.cheeses);
@@ -161,19 +165,17 @@ public class UserInterface {
     private void addDrink() {
         System.out.println("\n--- Add Drink ---");
         String size = getSelectionOrCancel(MenuSelection.Drink.sizes, "Choose Drink Size");
-        if (size == null) return; // exit if cancelled
+        if (size == null) return;
 
         String flavor = getSelectionOrCancel(MenuSelection.Drink.flavors, "Choose Drink flavor");
-        if (size == flavor) return; // exit if cancelled
+        if (size == flavor) return;
 
-        // Created new drink object and adding to current order
         Drink drink = new Drink(flavor, size);
         currentOrder.addItem(drink);
 
         System.out.printf("Drink added! Price: $%.2f\n", drink.calculatePrice());
     }
     private void addGarlicKnots() {
-
     }
     private void checkout(){
         System.out.println("""
