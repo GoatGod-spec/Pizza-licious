@@ -2,14 +2,15 @@ package com.pluralsight;
 
 import java.util.ArrayList;
 
-public class Pizza {
+public class Pizza extends Product{
 
     private String size;
     private String crustType;
     private ArrayList<Topping> toppings;
     private Boolean stuffedCrust;
 
-    public Pizza(String name, double price, String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
+    public Pizza(String name, String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
+        super(name, 0);
         this.size = size;
         this.crustType = crustType;
         this.toppings = new ArrayList<>();
@@ -46,66 +47,20 @@ public class Pizza {
     }
 
     public void addTopping(Topping topping) {
+
         toppings.add(topping);
     }
 
-    private double getMeatPrice(String size, int extraMeat) {
-        double basePrice = 0;
-        double extraPrice = 0;
 
-        switch (size) {
-            case "8":
-                basePrice = 1.00;
-                extraPrice = .50;
-                break;
-            case "12":
-                basePrice = 2.00;
-                extraPrice = 1.00;
-                break;
-            case "16":
-                basePrice = 3.00;
-                extraPrice = 1.50;
-                break;
-        }
-        return basePrice + (extraPrice * extraMeat);
-    }
 
-    private double getCheesePrice(String size, int extraCheese) {
-        double basePrice = 0;
-        double extraPrice = 0;
-
-        switch (size) {
-            case "8":
-                basePrice = .75;
-                extraPrice = .30;
-                break;
-            case "12":
-                basePrice = 1.50;
-                extraPrice = .60;
-                break;
-            case "16":
-                basePrice = 2.25;
-                extraPrice = .90;
-                break;
-        }
-        return basePrice + (extraPrice * extraCheese);
-    }
     @Override
     public double calculatePrice(){
         double total = price;
-        for (Topping t : toppings){
-            String category = t.getType();
-
-            switch (category.toLowerCase()){
-                case "meat":
-                    total += getMeatPrice(size, t.getExtra());
-                    break;
-                case "cheese":
-                    total += getCheesePrice(size, t.getExtra());
-                    break;
-            }
+       for (Topping t : toppings){
+            total += t.calculatePrice();
         }
         return total;
+
     }
 
     @Override

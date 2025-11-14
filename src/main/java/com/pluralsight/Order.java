@@ -7,18 +7,12 @@ import java.time.format.DateTimeFormatter;
 // Contains Product items such as (Pizza, Drink, and Garlic Knots) also calculates total.
 public class Order {
 
-    private String orderId;
     private LocalDateTime dateTime;
     private ArrayList<Product> items;
 
-    public Order(String orderId) {
-        this.orderId = orderId;
+    public Order() {
         this.dateTime = LocalDateTime.now();
         this.items = new ArrayList<>();
-    }
-
-    public String getOrderId() {
-        return orderId;
     }
 
     public LocalDateTime getDateTime() {
@@ -40,7 +34,6 @@ public class Order {
         return total;
     }
     public void display() {
-        System.out.println("Order: " + orderId);
             System.out.println("Date/Time: " + dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd / HH:mm:ss")));
         System.out.println("Items in order: ");
         for (Product p : items) {

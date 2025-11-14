@@ -1,38 +1,25 @@
 package com.pluralsight;
 
-public class Topping {
+public class Topping extends Product{
 
-    private String name;
     private String type;
-    private int extra;
 
-    public Topping(String name, String type, int extra) {
-        this.name = name;
+    public Topping(String name, double price, String type) {
+        super(name, price);
         this.type = type;
-        this.extra = extra;
-    }
-    public Topping(String name, String type) {
-        this(name, type, 0);
-    }
 
-    public String getName() {
-        return name;
     }
-
     public String getType() {
         return type;
     }
 
-    public int getExtra() {
-        return extra;
+    @Override
+    public double calculatePrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        if (extra > 0) {
-            return name + " (" + type + ", extra x" + extra + ")";
-        } else {
             return name + " (" + type + ")";
-        }
     }
 }

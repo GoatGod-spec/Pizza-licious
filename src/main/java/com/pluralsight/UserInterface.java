@@ -42,6 +42,7 @@ public class UserInterface {
     }
     private void startNewOrder(){
         currentOrder = new Order();
+
         boolean ordering = true;
 
         while (ordering) {
@@ -92,7 +93,7 @@ public class UserInterface {
         }
         boolean stuffedCrust = ToppingsHelper.chooseYesNo("Would you like Stuffed Crust in your Pizza?");
 
-        Pizza pizza = new Pizza("Custom Pizza",0, size, crust, new ArrayList<>(), stuffedCrust);
+        Pizza pizza = new Pizza("Custom Pizza", size, crust, new ArrayList<>(), stuffedCrust);
 
         boolean orderToppings = true;
 
@@ -119,40 +120,65 @@ public class UserInterface {
             }
         }
         currentOrder.addItem(pizza);
-        System.out.println("\n--- Pizza was added to your order! \nPrice: $%.2\n", pizza.calculatePrice());
+        //todo was looking for an Item (product?) but giving it a pizza...
+
+        System.out.printf("\n--- Pizza was added to your order! \nPrice: $%.2\n", pizza.calculatePrice());
+        //todo this was not building
     }
 
-    private void addRegToppings(Pizza pizza, String[] options, String title, String type, boolean allowExtra){
-        List <String> selectedItems = ToppingsHelper.selectMultiple(options, title);
-
-        if (selectedItems.isEmpty()) {
-            System.out.println("No " + title.toLowerCase() + " selected.");
-            return;
+    private void addRegToppings(Pizza pizza){
+        List<String> regTopping = ToppingsHelper.selectMultiple(MenuSelection.Toppings.regToppings, "What kind of regular toppings would you like?");
+        System.out.println(regTopping);
+        for (String rt : regTopping){ // : = in
+            Topping regT = new Topping(rt,0,"Regular Topping");
+            pizza.addTopping(regT);
         }
-        for (String item : selectedItems){
-            int extra = 0;
-
-            if (allowExtra){
-                extra = ConsoleHelper.promptForInt("Extra topping of " + item + "? (0 for standard");
-            }
-            pizza.addTopping(new Topping(item, type, extra));
-        }
-        System.out.println(title + " Added!");
     }
 
 
     private void addMeats(Pizza pizza){
-        // name/title of meat, type of meat and if true/false of extra topping
-        addMeats(pizza, MenuSelection.Toppings.meats, "Meats", "meat", true);
+        List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.meats, "What kind of meat toppings would you like?");
+        System.out.println(toppings);
+        double price = 0;
+        switch(pizza.getSize().toLowerCase()) {
+            case "small" -> price = 1.00;
+            case "medium" -> price = 2.00;
+            case "large" -> price = 3.00;
+        }
+        for (String rt : toppings){ // : = in
+            Topping regT = new Topping(rt, price,"meat");
+            pizza.addTopping(regT);
+        }
     }
     private void addCheeses (Pizza pizza){
-        addCheeses(pizza, MenuSelection.Toppings.cheeses);
+        List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.cheeses, "What kind of cheese would you like?");
+        System.out.println(toppings);
+        double price = 0;
+        switch(pizza.getSize().toLowerCase()) {
+            case "small" -> price = .75;
+            case "medium" -> price = 1.50;
+            case "large" -> price = 2.25;
+        }
+        for (String rt : toppings){ // : = in
+            Topping regT = new Topping(rt, price,"cheese");
+            pizza.addTopping(regT);
+        }
     }
     private void addSauces(Pizza pizza){
-        addSauces(pizza, MenuSelection.Toppings.sauces);
+        List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.sauces, "What kind of sauce would you like?");
+        System.out.println(toppings);
+        for (String rt : toppings){ // : = in
+            Topping regT = new Topping(rt, 0,"sauce");
+            pizza.addTopping(regT);
+        }
     }
     private void addSides(Pizza pizza){
-        addSides(pizza, MenuSelection.Toppings.sides);
+        List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.sauces, "What sides would you like?");
+        System.out.println(toppings);
+        for (String rt : toppings) { // : = in
+            Topping regT = new Topping(rt, 0, "side");
+            pizza.addTopping(regT);
+        }
     }
     private String getSelectionOrCancel(String[] options, String title){
         String selection = ToppingsHelper.selectSingle(options, title);
@@ -168,7 +194,7 @@ public class UserInterface {
         if (size == null) return;
 
         String flavor = getSelectionOrCancel(MenuSelection.Drink.flavors, "Choose Drink flavor");
-        if (size == flavor) return;
+        if (flavor == null) return;
 
         Drink drink = new Drink(flavor, size);
         currentOrder.addItem(drink);
@@ -186,14 +212,14 @@ public class UserInterface {
             return;
         }
 
-        currentOrder.displayOrder();
-
+        //currentOrder.displayOrder();
+        ////todo no display order
         System.out.printf("Total is: $%.2f\n", currentOrder.calculateTotal());
 
         boolean saveReceipt = ToppingsHelper.chooseYesNo("Would you like me to upload your receipt?");
 
         if (saveReceipt) {
-            ReceiptManager.saveReceipt(currentOrder);
+            //ReceiptManager.saveReceipt(currentOrder);
         }
         System.out.println("Order Complete, Thank you for dining with us.");
     }
