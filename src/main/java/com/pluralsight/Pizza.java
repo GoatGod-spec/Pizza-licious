@@ -9,8 +9,8 @@ public class Pizza extends Product{
     private ArrayList<Topping> toppings;
     private Boolean stuffedCrust;
 
-    public Pizza(String name, String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
-        super(name, 0);
+    public Pizza(String name, double price, String size, String crustType, ArrayList<Topping> toppings, Boolean stuffedCrust) {
+        super(name, price);
         this.size = size;
         this.crustType = crustType;
         this.toppings = new ArrayList<>();
@@ -71,5 +71,13 @@ public class Pizza extends Product{
                 ", toppings=" + toppings +
                 ", stuffedCrust=" + stuffedCrust +
                 '}';
+    }
+    public int getSizeInt() {
+        return switch (size.toLowerCase()) {
+            case "8" -> 0;
+            case "12" -> 1;
+            case "16" -> 2;
+            default -> throw new IllegalArgumentException("Invalid size: " + size);
+        };
     }
 }

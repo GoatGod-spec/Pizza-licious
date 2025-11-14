@@ -10,7 +10,7 @@ public class UserInterface {
 
     public void display() {
         System.out.println("\n--- Welcome to Goated Pizza ----");
-
+        currentOrder = new Order();
         boolean ordering = true;
 
         while (ordering) {
@@ -92,8 +92,19 @@ public class UserInterface {
             return;
         }
         boolean stuffedCrust = ToppingsHelper.chooseYesNo("Would you like Stuffed Crust in your Pizza?");
-
-        Pizza pizza = new Pizza("Custom Pizza", size, crust, new ArrayList<>(), stuffedCrust);
+        double pizzaPrice = 0.0;
+        switch (size) {
+            case "8":
+                pizzaPrice = 8;
+                break;
+            case "12":
+                pizzaPrice = 12;
+                break;
+            case "16":
+                pizzaPrice = 16.5;
+                break;
+        }
+        Pizza pizza = new Pizza("Custom Pizza", pizzaPrice, size, crust, new ArrayList<>(), stuffedCrust);
 
         boolean orderToppings = true;
 
@@ -120,10 +131,9 @@ public class UserInterface {
             }
         }
         currentOrder.addItem(pizza);
-        //todo was looking for an Item (product?) but giving it a pizza...
 
-        System.out.printf("\n--- Pizza was added to your order! \nPrice: $%.2\n", pizza.calculatePrice());
-        //todo this was not building
+        System.out.printf("\n--- Pizza was added to your order! \nPrice: $%.2f\n", pizza.calculatePrice());
+
     }
 
     private void addRegToppings(Pizza pizza){
@@ -139,28 +149,22 @@ public class UserInterface {
     private void addMeats(Pizza pizza){
         List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.meats, "What kind of meat toppings would you like?");
         System.out.println(toppings);
-        double price = 0;
-        switch(pizza.getSize().toLowerCase()) {
-            case "small" -> price = 1.00;
-            case "medium" -> price = 2.00;
-            case "large" -> price = 3.00;
-        }
-        for (String rt : toppings){ // : = in
-            Topping regT = new Topping(rt, price,"meat");
+        double[] prices = {1.00, 2.00, 3.00};
+        double[] extraPrices = {.50, 1.00, 1.50};
+        for (int i = 0; i < toppings.size(); i++) {
+            double price = (i == 0) ? prices[pizza.getSizeInt()] : extraPrices[pizza.getSizeInt()];
+            Topping regT = new Topping(toppings.get(i), price, "meat");
             pizza.addTopping(regT);
         }
     }
     private void addCheeses (Pizza pizza){
         List<String> toppings = ToppingsHelper.selectMultiple(MenuSelection.Toppings.cheeses, "What kind of cheese would you like?");
         System.out.println(toppings);
-        double price = 0;
-        switch(pizza.getSize().toLowerCase()) {
-            case "small" -> price = .75;
-            case "medium" -> price = 1.50;
-            case "large" -> price = 2.25;
-        }
-        for (String rt : toppings){ // : = in
-            Topping regT = new Topping(rt, price,"cheese");
+        double[] prices = {.75, 1.50, 2.25};
+        double[] extraPrices = {.30, .60, .90};
+        for (int i = 0; i < toppings.size(); i++) {
+            double price = (i == 0) ? prices[pizza.getSizeInt()] : extraPrices[pizza.getSizeInt()];
+            Topping regT = new Topping(toppings.get(i), price, "cheese");
             pizza.addTopping(regT);
         }
     }
